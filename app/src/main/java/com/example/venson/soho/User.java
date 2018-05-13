@@ -17,6 +17,7 @@ public class User {
 	//false=F,true=M
 	
 	private String userPicPath;
+	private String userlive;
 
 	public User(int userId, String email, String password, Date registerTime, boolean isFBRegistered, String userName,
 			String userLINE, String userSelfDes, boolean userGender, String userPicPath) {
@@ -31,11 +32,12 @@ public class User {
 		this.userSelfDes = userSelfDes;
 		this.userGender = userGender;
 		this.userPicPath = userPicPath;
+
 	}
 	//email regex
 	//"/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/"
 	public User(int userId,String email, Date registerTime, boolean isFBRegistered, String userName, String userLINE,
-			String userSelfDes, boolean userGender, String userPicPath) {
+			String userSelfDes, boolean userGender, String userPicPath,String userlive) {
 		super();
 		this.userId = userId;
 		this.email=email;
@@ -46,8 +48,20 @@ public class User {
 		this.userSelfDes = userSelfDes;
 		this.userGender = userGender;
 		this.userPicPath = userPicPath;
+		this.userlive = userlive;
 	}
 
+	public User(int userId, String email, Date registerTime, boolean isFBRegistered, String userName, String userLINE, String userSelfDes, boolean userGender, String userPicPath) {
+		this.userId = userId;
+		this.email = email;
+		this.registerTime = registerTime;
+		this.isFBRegistered = isFBRegistered;
+		this.userName = userName;
+		this.userLINE = userLINE;
+		this.userSelfDes = userSelfDes;
+		this.userGender = userGender;
+		this.userPicPath = userPicPath;
+	}
 
 	public int getUserId() {
 		return userId;
@@ -128,7 +142,12 @@ public class User {
 	public void setUserPicPath(String userPicPath) {
 		this.userPicPath = userPicPath;
 	}
-	
-	
 
+	public String getUserlive() {
+		return userlive;
+	}
+
+	public void setUserlive(String userlive) {
+		this.userlive = userlive;
+	}
 }

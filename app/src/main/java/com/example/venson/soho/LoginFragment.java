@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
         login_look.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new MemberFragment();
+                Fragment fragment = new HomeFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction =
                         fragmentManager.beginTransaction();
@@ -139,22 +139,21 @@ public class LoginFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-//        SharedPreferences preferences = getActivity().getSharedPreferences(Common.PREF_FILE,
-//                MODE_PRIVATE);
-//        boolean login = preferences.getBoolean("login", false);
-//        if (login) {
-//            String email = preferences.getString("email", "");
-//            String password = preferences.getString("password", "");
-//            tvEmail.setText(email);
-//            tvPassword.setText(password);
-//            if (isUser(email, password)) {
-//                getActivity().setResult(Activity.RESULT_OK);
-//                Fragment fragment = new HomeFragment();
-//                getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
 
-//            }
+        SharedPreferences preferences = getActivity().getSharedPreferences(Common.PREF_FILE,
+                MODE_PRIVATE);
+        boolean login = preferences.getBoolean("login", false);
+        if (login) {
+            String email = preferences.getString("email", "");
+            String password = preferences.getString("password", "");
 
-//        }
+            if (isUser(email, password)) {
+                getActivity().setResult(Activity.RESULT_OK);
+                Fragment fragment = new HomeFragment();
+                getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            }
+
+        }
 
 
     }

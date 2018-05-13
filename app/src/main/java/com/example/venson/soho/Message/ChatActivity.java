@@ -36,8 +36,12 @@ import android.widget.Toast;
 
 
 import com.example.venson.soho.Common;
+import com.example.venson.soho.LoginRegist.CommonTask;
+import com.example.venson.soho.Member.User;
 import com.example.venson.soho.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 
 import java.io.ByteArrayOutputStream;
@@ -61,8 +65,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView ivCamera, ivPicture, ivSend;
     private LinearLayout linearLayout;
     private EditText etMessage;
-    private String friend_em;
-
+    private String friend_ID;
+    private  CommonTask findUserTask;
     private Uri contentUri, croppedImageUri;
 
 
@@ -75,18 +79,18 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         broadcastManager = LocalBroadcastManager.getInstance(this);
         registerChatReceiver();
 
-        friend_em = getIntent().getStringExtra("friend_em");
+        friend_ID = getIntent().getStringExtra("friend_ID");
         String messageType = getIntent().getStringExtra("messageType");
         if (messageType != null) {
             String messageContent = getIntent().getStringExtra("messageContent");
             switch (messageType) {
                 case "text":
-                    showMessage(friend_em, messageContent, true);
+                    showMessage(friend_ID, messageContent, true);
                     break;
                 case "image":
                     byte[] image = Base64.decode(messageContent, Base64.DEFAULT);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-                    showImage(friend_em, bitmap, true);
+                    showImage(friend_ID, bitmap, true);
                     break;
                 default:
                     break;
@@ -100,7 +104,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         requestPermissions_Storage();
-        ChatWebSocketClient.friendInChatEM = friend_em;
+        ChatWebSocketClient.friendInChatID = friend_ID;
     }
 
     private void requestPermissions_Storage() {
@@ -141,11 +145,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                     Common.showToast(this, "message is empty");
                     return;
                 }
-                String sender_em = getUserEmail();
-                showMessage(sender_em, message, false);
+                String sender_ID = getUserID();
+                showMessage(sender_ID, message, false);
                 etMessage.setText(null);
 
-                ChatMessage chatMessage = new ChatMessage("chat", sender_em, friend_em, message, "text");
+                ChatMessage chatMessage = new ChatMessage("chat", sender_ID, friend_ID, message, "text");
                 String chatMessageJson = new Gson().toJson(chatMessage);
                 chatWebSocketClient.send(chatMessageJson);
                 Log.d(TAG, "output: " + chatMessageJson);
@@ -195,9 +199,24 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         View view;
 
         if (left) {
+            int friendID = Integer.valueOf(sender_em);
+            Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+            String url = Common.URL + "/Login_RegistServlet";
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("action", "findUserById");
+            jsonObject.addProperty("userId", friendID);
+            String jsonOut = jsonObject.toString();
+            findUserTask = new CommonTask(url, jsonOut);
+            User user = null;
+            try {
+                String result = findUserTask.execute().get();
+                user = gson.fromJson(result, User.class);
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
             view = View.inflate(this, R.layout.chat_message_left, null);
             TextView tvChatUserName = view.findViewById(R.id.tvChatUserName);
-            tvChatUserName.setText(sender_em);
+            tvChatUserName.setText(user.getUserName());
         } else {
             view = View.inflate(this, R.layout.chat_message_right, null);
         }
@@ -222,9 +241,24 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
         View view;
         if (left) {
+            int friendID = Integer.valueOf(sender_em);
+            Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+            String url = Common.URL + "/Login_RegistServlet";
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("action", "findUserById");
+            jsonObject.addProperty("userId", friendID);
+            String jsonOut = jsonObject.toString();
+            findUserTask = new CommonTask(url, jsonOut);
+            User user = null;
+            try {
+                String result = findUserTask.execute().get();
+                user = gson.fromJson(result, User.class);
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
             view = View.inflate(this, R.layout.chat_image_left, null);
             TextView tvChatUserName = view.findViewById(R.id.tvChatUserName);
-            tvChatUserName.setText(sender_em);
+            tvChatUserName.setText(user.getUserName());
         } else {
             view = View.inflate(this, R.layout.chat_image_right, null);
         }
@@ -252,12 +286,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public String getUserEmail() {
-        SharedPreferences preferences =
-                getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
-        String userEmail = preferences.getString("email", "");
-        Log.d(TAG, "userEmail = " + userEmail);
-        return userEmail;
+    public String getUserID() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+        int userID = sharedPreferences.getInt("user_id", -1);
+        Log.d(TAG, "userID:" + String.valueOf(userID));
+        return String.valueOf(userID);
     }
 
 
@@ -269,10 +302,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             String message = intent.getStringExtra("message");
             ChatMessage chatMessage = new Gson().fromJson(message, ChatMessage.class);
 
-            String sender_em = chatMessage.getSender_em();
+            String sender_em = chatMessage.getSender_ID();
             String messageType = chatMessage.getMessageType();
 
-            if (sender_em.equals(friend_em)) {
+            if (sender_em.equals(friend_ID)) {
                 switch (messageType) {
 
                     case "text":
@@ -314,11 +347,11 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         Bitmap bitmap = BitmapFactory.decodeStream(
                                 getContentResolver().openInputStream(croppedImageUri));
                         Bitmap downsizedImage = Common.downSize(bitmap, newSize);
-                        String sender_em = getUserEmail();
-                        showImage(sender_em, downsizedImage, false);
+                        String sender_ID = getUserID();
+                        showImage(sender_ID, downsizedImage, false);
                         // 將欲傳送的對話訊息轉成JSON後送出
                         String message = Base64.encodeToString(bitmapToPNG(downsizedImage), Base64.DEFAULT);
-                        ChatMessage chatMessage = new ChatMessage("chat", sender_em, friend_em, message, "image");
+                        ChatMessage chatMessage = new ChatMessage("chat", sender_ID, friend_ID, message, "image");
                         String chatMessageJson = new Gson().toJson(chatMessage);
                         chatWebSocketClient.send(chatMessageJson);
                         Log.d(TAG, "output: " + chatMessageJson);
@@ -374,7 +407,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStop() {
         super.onStop();
-        ChatWebSocketClient.friendInChatEM = null;
+        ChatWebSocketClient.friendInChatID = null;
     }
 
     @Override

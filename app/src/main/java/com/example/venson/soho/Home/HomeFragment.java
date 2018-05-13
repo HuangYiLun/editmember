@@ -359,7 +359,7 @@ public class HomeFragment extends Fragment {
 
     private void initContent() {
 //        Fragment fragment = new GetAllFragment();
-        showCases("getAllCase",0);
+   //     showCases("getAllCase",0);
 //        switchFragment(fragment);
     }
 

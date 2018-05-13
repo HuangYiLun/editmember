@@ -21,7 +21,7 @@ public class Common {
     private static final String TAG = "Common";
 
     // check if the device connect to the network
-    public static String URL = "http://10.0.2.2:8080/AndroidAppServlet/";
+    public static String URL = "http://10.0.2.2:8080/Test_Project_User/";
 
     public final static String SERVER_URI = "ws://10.0.2.2:8080/Test_Project_User/ChatServlet/";
     public final static String PREF_FILE = "preference";
@@ -54,11 +54,11 @@ public class Common {
     public static ChatWebSocketClient chatWebSocketClient;
 
     // 建立WebSocket連線
-    public static void connectServer(String userEmail, Context context) {
+    public static void connectServer(String userID, Context context) {
         if (chatWebSocketClient == null) {
             URI uri = null;
             try {
-                uri = new URI(SERVER_URI + userEmail);
+                uri = new URI(SERVER_URI + userID);
             } catch (URISyntaxException e) {
                 Log.e(TAG, e.toString());
             }

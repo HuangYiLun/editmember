@@ -8,194 +8,307 @@
     android:orientation="vertical">
 
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="240dp"
+        android:orientation="vertical"
+        android:background="@drawable/space"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="180dp"
+            android:orientation="vertical"
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/person_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary">
+            >
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvToolbar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="@string/person_info"
-                        android:textSize="20sp" />
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.Toolbar>
-
-            <ImageView
-                android:id="@+id/iVUser"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivMemberUser"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/user" />
+                android:layout_marginTop="20dp"
+                android:src="@drawable/dog"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#ffffff"
+                />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-
-                <TextView
-                    android:id="@+id/eTName"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:gravity="center"
-                    android:hint="@string/etName"
-                    android:inputType="textPersonName"
-                    android:lines="1"
-                    android:padding="10dp" />
-
-                <RadioGroup
-                    android:id="@+id/rgGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_toEndOf="@+id/eTName"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tVSex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:text="@string/性別"
-                        android:textSize="18sp" />
-
-                    <RadioButton
-                        android:id="@+id/rbMen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="@string/男" />
-
-                    <RadioButton
-                        android:id="@+id/rbWomen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/女" />
-
-                </RadioGroup>
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/etMemberName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:text="使用者名稱"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                />
 
-                <Button
-                    android:id="@+id/btTrack"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:background="@drawable/heart" />
-
-                <Button
-                    android:id="@+id/btGallery"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginLeft="40dp"
-                    android:background="@drawable/gallery" />
-
-                <Button
-                    android:id="@+id/btEvaluation"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="40dp"
-                    android:background="@drawable/evaluation" />
-                <Button
-                    android:id="@+id/btEdit"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="40dp"
-                    android:background="@drawable/edit"/>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                android:paddingBottom="50dp">
-
-                <TextView
-                    android:id="@+id/etCompany"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="@string/etCompany"
-                     />
-
-                <TextView
-                    android:id="@+id/etWorkExperience"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="@string/etWorkExperience"
-                     />
-
-                <TextView
-                    android:id="@+id/etExpertise"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="@string/etExpertise"
-                     />
-
-                <TextView
-                    android:id="@+id/etLive"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="@string/etLive"
-                     />
-
-                <TextView
-                    android:id="@+id/etPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:hint="@string/etPhone"
-                    />
-
-                <TextView
-                    android:id="@+id/etLine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:hint="@string/etLine"
-                     />
-            </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="190dp"
+            android:layout_marginBottom="9dp"
+            android:layout_centerHorizontal="true"
+            android:elevation="8dp"
+            app:cardCornerRadius="0dp"
+            app:cardBackgroundColor="#ffffff"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    >
+
+                    <Button
+                        android:id="@+id/btMemberTrack"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/heart"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    >
+
+                    <Button
+                        android:id="@+id/btMemberGallery"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/gallery"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    >
+
+                    <Button
+                        android:id="@+id/btMemberEvaluation"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/evaluation"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="公司"
+                        android:textSize="20sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right">
+
+                    <ImageButton
+                        android:id="@+id/btMemberEdit"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:src="@drawable/edit"
+                        />
+
+
+                </LinearLayout>
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:id="@+id/etMemberCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:hint="公司"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="工作經歷"
+                    android:textSize="20sp"
+                    android:layout_marginTop="10dp"
+                    />
+                <TextView
+                    android:id="@+id/etMemberWorkExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="工作經歷"
+                    android:textSize="20sp"
+                    android:layout_marginStart="20dp"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="專長"
+                    android:textSize="20sp"
+                    android:layout_marginTop="10dp"
+                    />
+                <TextView
+                    android:id="@+id/etMemberExpertise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="專長"
+                    android:textSize="20sp"
+                    android:layout_marginStart="20dp"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="聯絡方式"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="手機"
+                        android:textSize="20sp"
+                        android:layout_marginTop="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LINE"
+                        android:textSize="20sp"
+                        android:layout_marginTop="23dp"
+                        android:layout_marginStart="20dp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:id="@+id/etMemberPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="手機"
+                        android:textSize="20sp"
+                        android:inputType="number"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        />
+                    <TextView
+                        android:id="@+id/etMemberLine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="LINE"
+                        android:textSize="20sp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="23dp"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="居住地"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/etMemberLive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="居住地"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                />
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

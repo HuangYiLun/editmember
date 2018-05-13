@@ -34,7 +34,7 @@ public class GetCaseAdapter extends RecyclerView.Adapter<GetCaseAdapter.MyViewHo
     private static final String TAG = "HomeCaseFragment";
     private MyTask caseTagTask;
     private LayoutInflater layoutInflater;
-    List<MyCase> myCases = new ArrayList<>();
+    static List<MyCase> myCases = new ArrayList<>();
     Context context;
 
         GetCaseAdapter(List<MyCase> myCases, Context context) {
@@ -59,7 +59,7 @@ public class GetCaseAdapter extends RecyclerView.Adapter<GetCaseAdapter.MyViewHo
 
     @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.case_item_cardview, parent, false);
+            View itemView = layoutInflater.inflate(R.layout.case_item_cardview, parent, false);
             return new GetCaseAdapter.MyViewHolder(itemView);
         }
 

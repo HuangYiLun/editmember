@@ -11,25 +11,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.venson.soho.Category;
 import com.example.venson.soho.Common;
 import com.example.venson.soho.LoginRegist.CommonTask;
 import com.example.venson.soho.R;
+import com.example.venson.soho.UserCapacity;
+import com.example.venson.soho.UserExp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class MemberFragment extends Fragment {
     private String TAG = "MemberFragment";
-    private Button btGallery, btTrack, btEvaluation, btEdit;
+    private Button btGallery, btTrack, btEvaluation;
+    private ImageButton  btEdit;
     private TextView etName, etCompany, etWorkExperience, etExpertise, etLive, etPhone, etLine;
-    private RadioGroup rgGender;
-    private CommonTask findUserTask;
+    private CommonTask findCompanyTask,findUserCapacityTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,18 +104,29 @@ public class MemberFragment extends Fragment {
             jsonObject.addProperty("action", "findUserById");
             jsonObject.addProperty("userId", userId);
             String jsonOut = jsonObject.toString();
-            findUserTask = new CommonTask(url, jsonOut);
+            findUserCapacityTask = new CommonTask(url, jsonOut);
             User user = null;
             try {
-                String result = findUserTask.execute().get();
+                String result = findUserCapacityTask.execute().get();
                 user = gson.fromJson(result, User.class);
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
+            UserCompany userCompany = getUserCompanyName(userId);
+            String companyName = userCompany.getName();
+            Log.d(TAG,companyName);
+
+            String capacity = findUserCapacitiesById(userId);
+            Log.d(TAG, capacity);
+
+            String  exp = getUserExp(userId);
 
             etName.setText(user.getUserName());
-            etLine.setText("Line "+user.getUserLINE());
-            etExpertise.setText("專長 "+user.getUserSelfDes());
+            etLine.setText(user.getUserLINE());
+            etExpertise.setText(capacity);
+            etCompany.setText(userCompany.getName());
+            etLive.setText(user.getUserlive());
+            etWorkExperience.setText(exp);
 
 
         } else {
@@ -116,17 +137,104 @@ public class MemberFragment extends Fragment {
     }
 
     private void findviews(View view) {
-        btTrack = view.findViewById(R.id.btTrack);
-        btEvaluation = view.findViewById(R.id.btEvaluation);
-        etName = view.findViewById(R.id.eTName);
-        etWorkExperience = view.findViewById(R.id.etWorkExperience);
-        etExpertise = view.findViewById(R.id.etExpertise);
-        etLine = view.findViewById(R.id.etLine);
-        etPhone = view.findViewById(R.id.etPhone);
-        etLive = view.findViewById(R.id.etLive);
-        rgGender = view.findViewById(R.id.rgGender);
-        btGallery = view.findViewById(R.id.btGallery);
-        btEdit = view.findViewById(R.id.btEdit);
+        btTrack = view.findViewById(R.id.btMemberTrack);
+        btEvaluation = view.findViewById(R.id.btMemberEvaluation);
+        etName = view.findViewById(R.id.etMemberName);
+        etWorkExperience = view.findViewById(R.id.etMemberWorkExperience);
+        etExpertise = view.findViewById(R.id.etMemberExpertise);
+        etLine = view.findViewById(R.id.etMemberLine);
+        etPhone = view.findViewById(R.id.etMemberPhone);
+        etLive = view.findViewById(R.id.etMemberLive);
+        btGallery = view.findViewById(R.id.btMemberGallery);
+        btEdit = view.findViewById(R.id.btMemberEdit);
+        etCompany = view.findViewById(R.id.etMemberCompany);
+
     }
+
+    private UserCompany getUserCompanyName(int userId){
+
+        Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+        String url = Common.URL + "/Login_RegistServlet";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("action", "getCompanyById");
+        jsonObject.addProperty("userId", userId);
+        String jsonOut = jsonObject.toString();
+        findCompanyTask = new CommonTask(url, jsonOut);
+        UserCompany userCompany = null;
+        try {
+            String result = findCompanyTask.execute().get();
+            userCompany = gson.fromJson(result, UserCompany.class);
+            Log.d(TAG,result);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+        return  userCompany;
+
+    }
+
+    private String findUserCapacitiesById(int userId){
+        String userCapacityName="";
+        Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+        String url = Common.URL + "/Login_RegistServlet";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("action", "findCapacitiesByUId");
+        jsonObject.addProperty("userId", userId);
+        String jsonOut = jsonObject.toString();
+        findCompanyTask = new CommonTask(url, jsonOut);
+        List<UserCapacity> capacities = new ArrayList<>();
+
+        Type listType = new TypeToken<ArrayList<UserCapacity>>(){}.getType();
+        try {
+            String result = findCompanyTask.execute().get();
+
+            capacities = gson.fromJson(result, listType);
+            Log.d(TAG,"capacities"+String.valueOf(capacities));
+
+            Log.d(TAG,"result"+result);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+        for (UserCapacity userCapacity:capacities) {
+
+            userCapacityName = userCapacity.getC().getName();
+        }
+        Log.d(TAG,"name"+userCapacityName);
+        return userCapacityName ;
+
+    }
+
+    private String getUserExp(int userId){
+
+        Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+        String url = Common.URL + "/Login_RegistServlet";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("action", "findExpsByUId");
+        jsonObject.addProperty("userId", userId);
+        String jsonOut = jsonObject.toString();
+        findCompanyTask = new CommonTask(url, jsonOut);
+        List<UserExp> userExps = new ArrayList<>();
+        Type listType = new TypeToken<ArrayList<UserExp>>(){}.getType();
+
+        try {
+            String result = findCompanyTask.execute().get();
+            userExps = gson.fromJson(result, listType);
+            Log.d(TAG,result);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+        String exp="";
+
+        for (UserExp userExp:userExps) {
+            exp = exp +userExp.getExpDes();
+
+        }
+        Log.d(TAG, "exp " + exp);
+
+        return  exp;
+
+    }
+
 
 }

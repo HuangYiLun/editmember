@@ -1,9 +1,21 @@
 package com.example.venson.soho;
 
-public enum Category {
+import com.google.gson.annotations.SerializedName;
 
-	INSTRUMENT("Instrument", 1), WEB_DEVELOPEMENT("Web Developement", 2), GRAPHIC_DESIGN("Graphic Design",
-			3), SOFTWARE("Software", 4), SALES("Sales", 5), SUPPORTIVE("Supportive", 6);
+public enum Category {
+	@SerializedName("1")
+	INSTRUMENT("Instrument", 1),
+	@SerializedName("2")
+	WEB_DEVELOPEMENT("Web Developement", 2),
+	@SerializedName("3")
+	GRAPHIC_DESIGN("Graphic Design",
+			3),
+	@SerializedName("4")
+	SOFTWARE("Software", 4),
+	@SerializedName("5")
+	SALES("Sales", 5),
+	@SerializedName("6")
+	SUPPORTIVE("Supportive", 6);
 
 	private String CategoryName;
 	private int CategoryId;

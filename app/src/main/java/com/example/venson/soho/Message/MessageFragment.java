@@ -18,9 +18,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.venson.soho.Common;
+import com.example.venson.soho.LoginRegist.CommonTask;
 import com.example.venson.soho.MainActivity;
+import com.example.venson.soho.Member.User;
 import com.example.venson.soho.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +39,11 @@ public class MessageFragment extends Fragment {
     private static String TAG = "MessageFragment";
     private RecyclerView rvFriends;
     private LocalBroadcastManager localBroadcastManager;
+    private CommonTask findUserTask;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         MainActivity activity = (MainActivity) getActivity();
@@ -51,8 +56,8 @@ public class MessageFragment extends Fragment {
         rvFriends = view.findViewById(R.id.recyclerView);
         rvFriends.setLayoutManager(new LinearLayoutManager(activity));
         rvFriends.setAdapter(new FriendAdapter(activity));
-        String email = getUserEM();
-        Common.connectServer(email,activity);
+        String ID = getUserID();
+        Common.connectServer(ID, activity);
 
 
         return view;
@@ -99,15 +104,32 @@ public class MessageFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(FriendViewHolder holder, int position) {
-            final String friend_em= Common.getFriendList().get(position);
+            final String friend_ID = Common.getFriendList().get(position);
+            int friendID = Integer.valueOf(friend_ID);
+            Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
 
-            holder.tvUserName.setText(friend_em);
+            String url = Common.URL + "/Login_RegistServlet";
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("action", "findUserById");
+            jsonObject.addProperty("userId", friendID);
+            String jsonOut = jsonObject.toString();
+            findUserTask = new CommonTask(url, jsonOut);
+            User user = null;
+            try {
+                String result = findUserTask.execute().get();
+                user = gson.fromJson(result, User.class);
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+            }
+
+
+            holder.tvUserName.setText(user.getUserName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(activity, ChatActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("friend_em", friend_em);
+                    bundle.putString("friend_ID", friend_ID);
                     intent.putExtras(bundle);
                     activity.startActivity(intent);
                 }
@@ -118,7 +140,7 @@ public class MessageFragment extends Fragment {
 
     }
 
-////////////////加入朋友列表
+    ////////////////加入朋友列表
     private class FriendStateReceiver extends BroadcastReceiver {
         MainActivity activity;
 
@@ -131,18 +153,18 @@ public class MessageFragment extends Fragment {
             String message = intent.getStringExtra("message");
             StateMessage stateMessage = new Gson().fromJson(message, StateMessage.class);
             String type = stateMessage.getType();
-            String friend_em = stateMessage.getUserEmail();
-            Log.d(TAG,"FRIEND_EM"+friend_em);
-            String userEM = getUserEM();
-            Log.d(TAG,"userEM"+userEM);
+            String friend_ID = stateMessage.getUserID();
+            Log.d(TAG, "FRIEND_ID" + friend_ID);
+            String userID = getUserID();
+            Log.d(TAG, "userID" + userID);
             switch (type) {
                 case "open":
-                    List<String> friendlist = new ArrayList<>(stateMessage.getUserEmails());
-                    Log.d(TAG,"getfriendlist");
-                    friendlist.remove(userEM);
-                    Log.d(TAG,"remove userEM");
+                    List<String> friendlist = new ArrayList<>(stateMessage.getUserIDs());
+                    Log.d(TAG, "getfriendlist");
+                    friendlist.remove(userID);
+                    Log.d(TAG, "remove userID");
                     Common.setFriendList(friendlist);
-                    Log.d(TAG,"setfriendlist");
+                    Log.d(TAG, "setfriendlist");
 
                     rvFriends.getAdapter().notifyDataSetChanged();
 //                    if (friend_em.equals(userEM)) {
@@ -161,9 +183,9 @@ public class MessageFragment extends Fragment {
 
 
                 case "close":
-                    Common.getFriendList().remove(friend_em);
+                    Common.getFriendList().remove(friend_ID);
                     rvFriends.getAdapter().notifyDataSetChanged();
-                    Common.showToast(activity, friend_em + " is offline");
+                    Common.showToast(activity, friend_ID + " is offline");
                     break;
             }
             Log.d(TAG, "message: " + message);
@@ -171,10 +193,10 @@ public class MessageFragment extends Fragment {
         }
     }
 
-    public String getUserEM() {
+    public String getUserID() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
-        String userEmail = sharedPreferences.getString("email", "");
-        Log.d(TAG, "userEmail:" + userEmail);
-        return userEmail;
+        int userID = sharedPreferences.getInt("user_id", -1);
+        Log.d(TAG, "userID:" + String.valueOf(userID));
+        return String.valueOf(userID);
     }
 }

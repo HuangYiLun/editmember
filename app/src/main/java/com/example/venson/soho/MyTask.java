@@ -29,6 +29,7 @@ public class MyTask extends AsyncTask<String, Integer, String> {
         HttpURLConnection connection = null;
         StringBuilder inStr = new StringBuilder();
         try {
+
             connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setDoInput(true); // allow inputs
             connection.setDoOutput(true); // allow outputs

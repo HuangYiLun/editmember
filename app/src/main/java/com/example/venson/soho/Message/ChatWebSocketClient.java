@@ -24,7 +24,7 @@ public class ChatWebSocketClient extends WebSocketClient {
     private static final String TAG = "ChatWebSocketClient";
     private Gson gson;
     private Context context;
-    public static String friendInChatEM;
+    public static String friendInChatID;
 
     public ChatWebSocketClient(URI serverURI, Context context) {
         super(serverURI, new Draft_17());
@@ -49,10 +49,10 @@ public class ChatWebSocketClient extends WebSocketClient {
 
         if (type.equals("chat")) {
             ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
-            String text = "sender_em:" + chatMessage.getSender_em() +
-                    "\nfriendInChat: " + friendInChatEM;
+            String text = "sender_ID:" + chatMessage.getSender_ID() +
+                    "\nfriendInChat: " + friendInChatID;
             Log.d(TAG, text);
-            if (friendInChatEM == null || !friendInChatEM.equals(chatMessage.getSender_em())) {
+            if (friendInChatID == null || !friendInChatID.equals(chatMessage.getSender_ID())) {
                 showNotification(chatMessage);
                 return;
             }
@@ -93,14 +93,14 @@ public class ChatWebSocketClient extends WebSocketClient {
     private void showNotification(ChatMessage chatMessage) {
         Intent intent = new Intent(context, ChatActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("friend_em", chatMessage.getSender_em());
+        bundle.putString("friend_ID", chatMessage.getSender_ID());
         bundle.putString("messageType", chatMessage.getMessageType());
         bundle.putString("messageContent", chatMessage.getContent());
         intent.putExtras(bundle);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new Notification.Builder(context)
-                .setContentTitle("message from" + chatMessage.getSender_em())
+                .setContentTitle("message from" + chatMessage.getSender_ID())
                 .setSmallIcon(android.R.drawable.ic_menu_info_details)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)

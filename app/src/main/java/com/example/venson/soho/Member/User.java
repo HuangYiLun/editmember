@@ -14,6 +14,7 @@ public class User {
     private String userSelfDes;
     private boolean userGender;//0=F,1=M //false=F,true=M
     private String userPicPath;
+    private  String userlive;
 
 
 
@@ -24,17 +25,19 @@ public class User {
         this.password = password;
         this.userName = userName;
         this.userGender = userGender;
+
     }
 
     public User() {
     }
 
-    public User(int userId, String userName, String userLINE, String userSelfDes, boolean userGender) {
+    public User(int userId, String userName, String userLINE, String userSelfDes, boolean userGender,String userlive) {
         this.userId = userId;
         this.userName = userName;
         this.userLINE = userLINE;
         this.userSelfDes = userSelfDes;
         this.userGender = userGender;
+        this.userlive = userlive;
     }
 
     public User(int userId, String email, String password, Date registerTime, boolean isFBRegistered, String userName,
@@ -55,7 +58,7 @@ public class User {
     //email regex
     //"/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/"
     public User(int userId, String email, Date registerTime, boolean isFBRegistered, String userName, String userLINE,
-                String userSelfDes, boolean userGender, String userPicPath) {
+                String userSelfDes, boolean userGender, String userPicPath,String userlive) {
         super();
         this.userId = userId;
         this.email = email;
@@ -66,6 +69,7 @@ public class User {
         this.userSelfDes = userSelfDes;
         this.userGender = userGender;
         this.userPicPath = userPicPath;
+        this.userlive = userlive;
     }
 
 
@@ -149,7 +153,13 @@ public class User {
         this.userPicPath = userPicPath;
     }
 
+    public String getUserlive() {
+        return userlive;
+    }
 
+    public void setUserlive(String userlive) {
+        this.userlive = userlive;
+    }
 }
 
 
