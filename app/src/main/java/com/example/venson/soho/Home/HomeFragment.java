@@ -173,12 +173,12 @@ public class HomeFragment extends Fragment {
                 return true;
 
             case R.id.toolbar_item_add:
-                Fragment fragment = new CaseInsertFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                Fragment fragment = new CaseInsertFragment();
+//                FragmentManager fragmentManager = getFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.content, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
                 return true;
 
             case R.id.toolbar_item_filter:

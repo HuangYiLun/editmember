@@ -3,6 +3,7 @@ package com.example.venson.soho.LoginRegist;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.venson.soho.Member.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -21,10 +22,10 @@ public class UserRegistTask extends AsyncTask<Object, Integer, Integer> {
     protected Integer doInBackground(Object... params) {
         String url = params[0].toString();
         String action = params[1].toString();
-//        User user = (User) params[2];
+        User user = (User) params[2];
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("action", action);
-//        jsonObject.addProperty("user", new Gson().toJson(user));
+        jsonObject.addProperty("user", new Gson().toJson(user));
         String result;
         try {
             result = getRemoteDate(url, jsonObject.toString());

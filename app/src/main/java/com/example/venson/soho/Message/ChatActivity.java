@@ -163,7 +163,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 if (isIntentAvailable(this, intent)) {
                     startActivityForResult(intent, REQ_TAKE_PICTURE);
                 } else {
-                    Common.showToast(this,"No Camera App");
+                    Common.showToast(this, "No Camera App");
                 }
 
                 break;
@@ -204,7 +204,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         sdf.setTimeZone(android.icu.util.TimeZone.getTimeZone("Asia/Taipei"));
         Date dt = new Date();
-        String dts=sdf.format(dt);
+        String dts = sdf.format(dt);
         TextView tvChatMessageT = view.findViewById(R.id.tvChatMessageT);
         tvChatMessageT.setText(dts);
         TextView tvMessage = view.findViewById(R.id.tvChatMessage);
@@ -231,7 +231,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         sdf.setTimeZone(android.icu.util.TimeZone.getTimeZone("Asia/Taipei"));
         Date dt = new Date();
-        String dts=sdf.format(dt);
+        String dts = sdf.format(dt);
         TextView tvChatMessageT = view.findViewById(R.id.tvChatMessageT);
         tvChatMessageT.setText(dts);
         ImageView imageView = view.findViewById(R.id.imageView);
@@ -363,17 +363,20 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "This device doesn't support the crop action!", Toast.LENGTH_SHORT).show();
         }
     }
+
     private byte[] bitmapToPNG(Bitmap srcBitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         // 轉成PNG不會失真，所以quality參數值會被忽略
         srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
     }
+
     @Override
     protected void onStop() {
         super.onStop();
         ChatWebSocketClient.friendInChatEM = null;
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
@@ -392,7 +395,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
 
 
 }

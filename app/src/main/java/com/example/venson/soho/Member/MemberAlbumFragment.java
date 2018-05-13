@@ -12,22 +12,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.venson.soho.Home.CategoryTab.GetAllFragment;
+import com.example.venson.soho.MainActivity;
 import com.example.venson.soho.R;
 
 import java.util.zip.Inflater;
 
 
-
 public class MemberAlbumFragment extends Fragment {
     private RecyclerView rvAlbum;
     private TextView tvToolbar_title;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.member_album, container, false);
-        rvAlbum = view.findViewById(R.id.rvAlbum);
-        tvToolbar_title.setText(R.string.add_album_title);
+        MainActivity activity = (MainActivity) getActivity();
+
         return view;
     }
+
+
 
 }

@@ -197,74 +197,26 @@
                     />
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="專長"
-                android:textSize="20sp"
-                android:layout_marginTop="10dp"
-                />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
 
-
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="工作類型"
-                        android:textSize="20sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="20dp"
-                        android:layout_marginStart="20dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="專長"
-                        android:textSize="20sp"
-                        android:layout_marginStart="20dp"
-                        />
-                </LinearLayout>
-                <LinearLayout
+                    android:text="專長"
+                    android:textSize="20sp"
+                    android:layout_marginTop="10dp"
+                    />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:text="選擇工作類型"
-                        android:textSize="10sp"                        android:layout_marginStart="5dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="工作類型"
-                        android:textSize="20sp"
-                        android:layout_marginStart="5dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="技能專長"
-                        android:textSize="20sp"
-                        android:layout_marginStart="5dp"
-                        />
-                </LinearLayout>
+                    android:hint="專長"
+                    android:textSize="20sp"
+                    android:layout_marginStart="20dp"
+                    />
 
             </LinearLayout>
 

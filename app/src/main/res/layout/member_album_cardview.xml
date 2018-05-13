@@ -29,6 +29,7 @@
             android:orientation="vertical"
             >
             <TextView
+                android:id="@+id/tvAlbumName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="相簿名稱"
@@ -38,6 +39,7 @@
                 android:textColor="@color/white"
                 />
             <TextView
+                android:id="@+id/tvAlbumScript"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="相簿簡介"
@@ -53,6 +55,7 @@
                 android:layout_gravity="center"
                 >
                 <ImageView
+                    android:id="@+id/ivPicture"
                     android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_margin="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        app:cardCornerRadius="10dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/member_psname_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="會員名稱"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/member_pscontent_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/member_psname_id"
+                android:layout_marginTop="10dp"
+                android:text="介紹: "
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/member_processing_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/member_pscontent_id"
+                android:layout_marginStart="2dp"
+                android:layout_toEndOf="@+id/member_pscontent_id"
+                android:text="內容"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/mamber_processing_expertise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/member_pscontent_id"
+                android:layout_marginTop="10dp"
+                android:text="專長: "
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/member_psexpertise_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/mamber_processing_expertise"
+                android:layout_alignBottom="@+id/mamber_processing_expertise"
+                android:layout_margin="2dp"
+                android:layout_toEndOf="@+id/mamber_processing_expertise"
+                android:text="內容"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/member_processing_btconfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/member_content_id"
+                android:layout_alignBaseline="@id/member_name_id"
+                android:layout_alignParentEnd="true"
+                android:text="確認" />
+
+            <Button
+                android:id="@+id/member_processing_btcancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="終止合作"
+                android:layout_above="@id/member_psexpertise_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBaseline="@id/member_psexpertise_content" />
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>

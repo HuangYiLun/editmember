@@ -17,7 +17,7 @@ import java.net.URL;
 
 public class UserExistTask extends AsyncTask<Object, Integer, Boolean> {
     private final static String TAG = "UserExistTask";
-    private final static String ACTION = "userExist";
+    private final static String ACTION = "login";
 
     @Override
     protected Boolean doInBackground(Object... params) {

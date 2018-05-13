@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +16,33 @@ import android.widget.EditText;
 
 
 import com.example.venson.soho.Home.HomeFragment;
-import com.example.venson.soho.LoginRegist.UserExistTask;
+import com.example.venson.soho.LoginRegist.CommonTask;
+import com.example.venson.soho.Member.MemberFragment;
+import com.example.venson.soho.Member.User;
 import com.example.venson.soho.Message.MessageFragment;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class LoginFragment extends Fragment {
+    private String TAG = "LoginFragment";
     private Button login_look, btLogin, btRegister;
     private EditText tvEmail, tvPassword;
+    private CommonTask userExistTask;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       final View view = inflater.inflate(R.layout.login_layout,container ,false);
+        final View view = inflater.inflate(R.layout.login_layout, container, false);
         login_look = view.findViewById(R.id.login_look);
         login_look.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new BottomNavigation();
+                Fragment fragment = new MemberFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction =
                         fragmentManager.beginTransaction();
@@ -65,7 +75,7 @@ public class LoginFragment extends Fragment {
                             .putString("password", password).apply();
 
                     getActivity().setResult(Activity.RESULT_OK);
-                    Fragment fragment = new MessageFragment();
+                    Fragment fragment = new MemberFragment();
                     getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
 
                 } else {
@@ -90,7 +100,41 @@ public class LoginFragment extends Fragment {
         return view;
 
     }
-           ///已經登入時，自動登入
+
+    private boolean isUser(String email, String password) {
+        boolean isUser;
+        int userId;
+
+        String url = Common.URL + "/Login_RegistServlet";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("action", "login");
+        jsonObject.addProperty("email", email);
+        jsonObject.addProperty("password", password);
+        String jsonOut = jsonObject.toString();
+        userExistTask = new CommonTask(url, jsonOut);
+        Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+        User user = null;
+        try {
+            String result = userExistTask.execute().get();
+
+            user = gson.fromJson(result, User.class);
+
+            userId = user.getUserId();
+            Log.d(TAG,String.valueOf(userId));
+
+            SharedPreferences preferences = getActivity().getSharedPreferences(
+                    Common.PREF_FILE, MODE_PRIVATE);
+            preferences.edit().putInt("user_id",userId).apply();
+            isUser =true;
+
+        } catch (Exception e) {
+            Log.e(TAG, "isuser"+e.toString());
+            isUser = false;
+        }
+        return isUser;
+    }
+
+    ///已經登入時，自動登入
     @Override
     public void onStart() {
         super.onStart();
