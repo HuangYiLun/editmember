@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 
 import com.example.venson.soho.Home.HomeFragment;
 import com.example.venson.soho.Case.CaseOverViewFragment;
-import com.example.venson.soho.Case.Caseapply.CaseOverViewFragment;
 import com.example.venson.soho.Member.MemberFragment;
 import com.example.venson.soho.Message.MessageFragment;
 import com.example.venson.soho.Setting.SettingsFragment;
