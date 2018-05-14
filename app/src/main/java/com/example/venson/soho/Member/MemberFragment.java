@@ -121,12 +121,15 @@ public class MemberFragment extends Fragment {
 
             String  exp = getUserExp(userId);
 
+            String phoneNumber = findUserPhoneNumber(userId);
+
             etName.setText(user.getUserName());
             etLine.setText(user.getUserLINE());
             etExpertise.setText(capacity);
             etCompany.setText(userCompany.getName());
             etLive.setText(user.getUserlive());
             etWorkExperience.setText(exp);
+            etPhone.setText(phoneNumber);
 
 
         } else {
@@ -233,6 +236,27 @@ public class MemberFragment extends Fragment {
         Log.d(TAG, "exp " + exp);
 
         return  exp;
+
+    }
+    private String findUserPhoneNumber(int userId) {
+        String phoneNumber = "";
+        Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+        String url = Common.URL + "/Login_RegistServlet";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("action", "findUserPhone");
+        jsonObject.addProperty("userId", userId);
+        String jsonOut = jsonObject.toString();
+        CommonTask findPhoneTask = new CommonTask(url, jsonOut);
+
+        try {
+            phoneNumber = findPhoneTask.execute().get();
+
+            Log.d(TAG, "result" + phoneNumber);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+        return phoneNumber ;
 
     }
 

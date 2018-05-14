@@ -61,9 +61,17 @@ public class EditMemberFragment extends Fragment {
                 String line = etLine.getText().toString().trim();
                 String expertise = etExpertise.getText().toString().trim();
                 String live = etLive.getText().toString().trim();
-                String company = etCompany.getText().toString().trim();
+                String companyUN = etCompany.getText().toString().trim();
+                String phone = etPhone.getText().toString().trim();
+
+                //搜尋公司un
+                int comUN = Integer.valueOf(companyUN);
+                insertCompany(comUN);
+                int comID=findCompanyIdByUN(comUN);
                 //更新公司名稱
-                UpdateUserCompanyName(company);
+                UpdateUserCompanyName(comID);
+                //更新手機
+                updatePhoneNumber(phone);
 
                 User user = new User(userId, name, line, expertise, gender, live);
                 Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
@@ -96,6 +104,29 @@ public class EditMemberFragment extends Fragment {
 
 
         return view;
+    }
+
+    private int findCompanyIdByUN(int comUN) {
+        int comID;
+        Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+        String url = Common.URL + "/Login_RegistServlet";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("action", "searchCompanyByUN");
+        jsonObject.addProperty("UN", comUN);
+        String jsonOut = jsonObject.toString();
+        CommonTask findCompanyIdTask = new CommonTask(url, jsonOut);
+        Company company = null;
+        try {
+            String result = findCompanyIdTask.execute().get();
+            company = gson.fromJson(result, Company.class);
+            Log.e(TAG, result);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+        comID=company.getCompanyId();
+
+        return comID;
+
     }
 
     private void findviews(View view) {
@@ -145,12 +176,17 @@ public class EditMemberFragment extends Fragment {
 
             String exp = getUserExp(userId);
 
+
+            String phoneNumber = findUserPhoneNumber(userId);
+
+
             etName.setText(user.getUserName());
             etLine.setText(user.getUserLINE());
             etExpertise.setText(capacity);
             etLive.setText(user.getUserlive());
             etWorkExperience.setText(exp);
             etCompany.setText(companyName);
+            etPhone.setText(phoneNumber);
 
 
         } else {
@@ -184,8 +220,8 @@ public class EditMemberFragment extends Fragment {
 
     }
 
-    private void UpdateUserCompanyName(String companyName) {
-        int companyId = 3;
+    private void UpdateUserCompanyName(int companyId) {
+//        int companyId = 3;
         UserCompany userCompany = new UserCompany();
         userCompany.setCompanyId(companyId);
         userCompany.setUserCompanyId(userCompanyId);
@@ -210,6 +246,31 @@ public class EditMemberFragment extends Fragment {
 
 
     }
+
+
+    private void insertCompany(int UN) {
+
+        Company company = new Company();
+        company.setUniformNumber(UN);
+        Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+        JsonObject jsonOut = new JsonObject();
+        jsonOut.addProperty("action", "insertCompany");
+        jsonOut.addProperty("UN", UN);
+        String out = jsonOut.toString();
+        Log.e(TAG, "insertcompany:" + jsonOut);
+        String url = Common.URL + "/Login_RegistServlet";
+        CommonTask insertCompanyTask = new CommonTask(url, out);
+        try {
+            String result = insertCompanyTask.execute().get();
+            Log.d(TAG, "insert result :" + result);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+
+
+    }
+
 
     private String findUserCapacitiesById(int userId) {
         String userCapacityName = "";
@@ -275,4 +336,50 @@ public class EditMemberFragment extends Fragment {
         return exp;
 
     }
+    private String findUserPhoneNumber(int userId) {
+        String phoneNumber ="";
+        Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+        String url = Common.URL + "/Login_RegistServlet";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("action", "findUserPhone");
+        jsonObject.addProperty("userId", userId);
+        String jsonOut = jsonObject.toString();
+        CommonTask findPhoneTask = new CommonTask(url, jsonOut);
+
+        try {
+            phoneNumber = findPhoneTask.execute().get();
+
+            Log.d(TAG, "result" + phoneNumber);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+        return phoneNumber ;
+
+    }
+
+    private void updatePhoneNumber(String phoneNumber){
+
+        SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+        int userId = pref.getInt("user_id", -1);
+
+        JsonObject jsonOut = new JsonObject();
+        jsonOut.addProperty("action", "updateUserPhone");
+        jsonOut.addProperty("userId",userId);
+        jsonOut.addProperty("phoneNumber",phoneNumber);
+        String out = jsonOut.toString();
+        Log.e(TAG, "update:" + jsonOut);
+        String url = Common.URL + "/Login_RegistServlet";
+        CommonTask updatePhoneTask = new CommonTask(url, out);
+        try {
+            String result = updatePhoneTask.execute().get();
+            Log.d(TAG, "updatePhone :" + result);
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+
+
+    }
+
 }

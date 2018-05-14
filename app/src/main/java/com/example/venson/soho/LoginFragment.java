@@ -149,7 +149,7 @@ public class LoginFragment extends Fragment {
 
             if (isUser(email, password)) {
                 getActivity().setResult(Activity.RESULT_OK);
-                Fragment fragment = new HomeFragment();
+                Fragment fragment = new MemberFragment();
                 getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
             }
 
