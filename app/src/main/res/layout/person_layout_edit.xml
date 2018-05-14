@@ -7,7 +7,6 @@
     xmlns:design="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivEditUser"
+                android:id="@+id/ivMemberUser"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center"
@@ -34,7 +33,7 @@
                 app:civ_border_color="#ffffff"
                 />
 
-            <EditText
+            <TextView
                 android:id="@+id/etEditName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,8 +44,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 />
-
-
         </LinearLayout>
 
         <android.support.v7.widget.CardView
@@ -78,6 +75,7 @@
                     >
 
                     <Button
+                        android:id="@+id/btMemberTrack"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/heart"
@@ -93,7 +91,8 @@
                     >
 
                     <Button
-                        android:id="@+id/btGallery"
+
+                        android:id="@+id/btMemberGallery"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/gallery"
@@ -109,6 +108,7 @@
                     >
 
                     <Button
+                        android:id="@+id/btMemberEvaluation"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/evaluation"
@@ -139,44 +139,45 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="公司"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="right">
+                        android:gravity="right"
+                        >
 
-                    <ImageButton
-                        android:id="@+id/btEditComplete"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/complete"
-                        />
-
+                        <ImageButton
+                            android:id="@+id/btMemberEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_check_black_24dp"
+                            android:background="@color/white"
+                            />
+                    </LinearLayout>
 
                 </LinearLayout>
-                </LinearLayout>
 
 
-
-                <EditText
+                <TextView
                     android:id="@+id/etEditCompany"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:inputType="number"
                     android:hint="公司"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:layout_marginStart="20dp"
+                    />
 
             </LinearLayout>
 
@@ -193,7 +194,7 @@
                     android:textSize="20sp"
                     android:layout_marginTop="10dp"
                     />
-                <EditText
+                <TextView
                     android:id="@+id/etEditWorkExperience"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -203,27 +204,76 @@
                     />
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="專長"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 >
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="專長"
-                    android:textSize="20sp"
-                    android:layout_marginTop="10dp"
-                    />
-                <EditText
-                    android:id="@+id/etEditExpertise"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="工作類型"
+                        android:textSize="20sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="20sp"
+                        android:layout_marginStart="20dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="專長"
+                        android:textSize="20sp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="4dp"
+                        />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="專長"
-                    android:textSize="20sp"
-                    android:layout_marginStart="20dp"
-                    />
+                    android:orientation="vertical"
+                    >
+                    <Button
+                        android:layout_width="85dp"
+                        android:layout_height="33dp"
+                        android:text="工作類型"
+                        android:textSize="12sp"
+                        android:layout_marginStart="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/etEditExpertise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="工作類型"
+                        android:textSize="18sp"
+                        android:layout_marginStart="5dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="專長能力"
+                        android:textSize="20sp"
+                        android:layout_marginStart="5dp"
+                        />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -250,15 +300,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:text="手機"
-                        android:textSize="20sp"
-                        android:layout_marginTop="10dp"
-                        />
+                        android:textSize="20sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LINE"
                         android:textSize="20sp"
-                        android:layout_marginTop="23dp"
                         android:layout_marginStart="20dp"
                         />
                 </LinearLayout>
@@ -267,16 +314,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
-                    <EditText
+                    <TextView
                         android:id="@+id/etEditPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="手機"
                         android:textSize="20sp"
-                        android:inputType="number"
                         android:layout_marginStart="5dp"
                         />
-                    <EditText
+                    <TextView
                         android:id="@+id/etEditLine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -295,7 +341,7 @@
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 />
-            <EditText
+            <TextView
                 android:id="@+id/etEditLive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
