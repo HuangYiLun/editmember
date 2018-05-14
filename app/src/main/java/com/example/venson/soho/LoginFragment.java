@@ -160,16 +160,7 @@ public class LoginFragment extends Fragment {
 
     }
 
-    private boolean isUser(final String email, final String password) {
-        boolean isUser;
-        String url = Common.URL + "Login_RegistServlet";
-        try {
-            isUser = new UserExistTask().execute(url, email, password).get();
-        } catch (Exception e) {
-            isUser = false;
-        }
-        return isUser;
-    }
+
 
 
 }

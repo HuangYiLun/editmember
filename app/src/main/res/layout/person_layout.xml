@@ -33,6 +33,7 @@
                 />
 
             <TextView
+                android:id="@+id/etMemberName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="使用者名稱"
@@ -165,6 +166,7 @@
 
 
                 <TextView
+                    android:id="@+id/etMemberCompany"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="公司"
@@ -188,6 +190,7 @@
                     android:layout_marginTop="10dp"
                     />
                 <TextView
+                    android:id="@+id/etMemberWorkExperience"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="工作經歷"
@@ -204,7 +207,6 @@
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -238,6 +240,7 @@
                     >
 
                     <TextView
+                        android:id="@+id/etMemberExpertise"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="工作類型"
@@ -293,6 +296,7 @@
                     android:orientation="vertical"
                     >
                     <TextView
+                        android:id="@+id/etMemberPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="手機"
@@ -300,6 +304,7 @@
                         android:layout_marginStart="5dp"
                         />
                     <TextView
+                        android:id="@+id/etMemberLine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="LINE"
@@ -318,6 +323,7 @@
                 android:layout_marginTop="10dp"
                 />
             <TextView
+                android:id="@+id/etMemberLive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="居住地"

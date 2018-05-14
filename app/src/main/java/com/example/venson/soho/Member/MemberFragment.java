@@ -170,6 +170,7 @@ public class MemberFragment extends Fragment {
 
     }
 
+    //
     private void findviews(View view) {
         btTrack = view.findViewById(R.id.btMemberTrack);
         btEvaluation = view.findViewById(R.id.btMemberEvaluation);
