@@ -2,6 +2,7 @@ package com.example.venson.soho.Member;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.widget.RadioGroup;
 
 import com.example.venson.soho.Common;
 import com.example.venson.soho.LoginRegist.CommonTask;
+import com.example.venson.soho.LoginRegist.MemberGetImageTask;
 import com.example.venson.soho.R;
 import com.example.venson.soho.UserCapacity;
 import com.example.venson.soho.UserExp;
@@ -168,8 +170,8 @@ public class EditMemberFragment extends Fragment {
             }
 
             UserCompany userCompany = getUserCompanyName(userId);
-            String companyName = userCompany.getName();
-            Log.d(TAG, companyName);
+            int companyUN = userCompany.getUniformNumber();
+            Log.d(TAG, "companyName");
 
             String capacity = findUserCapacitiesById(userId);
             Log.d(TAG, capacity);
@@ -178,6 +180,21 @@ public class EditMemberFragment extends Fragment {
 
 
             String phoneNumber = findUserPhoneNumber(userId);
+           ////抓圖片
+            String picPath = pref.getString("userPicPath","");
+            Bitmap bitmap = null;
+
+            MemberGetImageTask memberGetImageTask = new MemberGetImageTask(url,picPath);
+            try {
+                bitmap = memberGetImageTask.execute().get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (bitmap != null) {
+                ivUser.setImageBitmap(bitmap);
+            } else {
+                ivUser.setImageResource(R.drawable.dog);
+            }
 
 
             etName.setText(user.getUserName());
@@ -185,8 +202,9 @@ public class EditMemberFragment extends Fragment {
             etExpertise.setText(capacity);
             etLive.setText(user.getUserlive());
             etWorkExperience.setText(exp);
-            etCompany.setText(companyName);
+            etCompany.setText(String.valueOf(companyUN));
             etPhone.setText(phoneNumber);
+
 
 
         } else {

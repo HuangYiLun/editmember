@@ -10,6 +10,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="6dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <Switch
+            android:id="@+id/swApplicationNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="申請通知"
+            android:textSize="35dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <Switch
+            android:id="@+id/swMessageNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="訊息通知"
+            android:textSize="35dp"/>
+
+    </LinearLayout>
     <Button
         android:id="@+id/btSetLogout"
         android:layout_width="match_parent"
@@ -19,6 +48,7 @@
         android:id="@+id/btSetLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="login"/>
+        android:text="login"
+       />
 
 </LinearLayout>

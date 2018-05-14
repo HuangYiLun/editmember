@@ -54,6 +54,7 @@ public class ChatWebSocketClient extends WebSocketClient {
             Log.d(TAG, text);
             if (friendInChatID == null || !friendInChatID.equals(chatMessage.getSender_ID())) {
                 showNotification(chatMessage);
+                Log.e(TAG,"shownotification");
                 return;
             }
         }

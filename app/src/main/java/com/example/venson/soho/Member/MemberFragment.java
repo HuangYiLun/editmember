@@ -1,6 +1,7 @@
 package com.example.venson.soho.Member;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,12 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.venson.soho.Category;
 import com.example.venson.soho.Common;
 import com.example.venson.soho.LoginRegist.CommonTask;
+import com.example.venson.soho.LoginRegist.MemberGetImageTask;
+import com.example.venson.soho.MainActivity;
 import com.example.venson.soho.R;
 import com.example.venson.soho.UserCapacity;
 import com.example.venson.soho.UserExp;
@@ -30,6 +34,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -40,12 +45,22 @@ public class MemberFragment extends Fragment {
     private ImageButton  btEdit;
     private TextView etName, etCompany, etWorkExperience, etExpertise, etLive, etPhone, etLine;
     private CommonTask findCompanyTask,findUserCapacityTask;
+    private ImageView ivMemberView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.person_layout, container, false);
         findviews(view);
+
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
+        String ID = String.valueOf(sharedPreferences.getInt("user_id", -1));
+        MainActivity activity = (MainActivity) getActivity();
+        Common.connectServer(ID, activity);
+
+
+
         btGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,6 +138,22 @@ public class MemberFragment extends Fragment {
 
             String phoneNumber = findUserPhoneNumber(userId);
 
+            //   5/14  抓圖片
+            String picPath = pref.getString("userPicPath","");
+            Bitmap bitmap = null;
+
+            MemberGetImageTask memberGetImageTask = new MemberGetImageTask(url,picPath);
+            try {
+                bitmap = memberGetImageTask.execute().get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (bitmap != null) {
+                ivMemberView.setImageBitmap(bitmap);
+            } else {
+                ivMemberView.setImageResource(R.drawable.dog);
+            }
+
             etName.setText(user.getUserName());
             etLine.setText(user.getUserLINE());
             etExpertise.setText(capacity);
@@ -151,6 +182,7 @@ public class MemberFragment extends Fragment {
         btGallery = view.findViewById(R.id.btMemberGallery);
         btEdit = view.findViewById(R.id.btMemberEdit);
         etCompany = view.findViewById(R.id.etMemberCompany);
+        ivMemberView = view.findViewById(R.id.ivMemberUser);
 
     }
 
@@ -246,7 +278,7 @@ public class MemberFragment extends Fragment {
         jsonObject.addProperty("action", "findUserPhone");
         jsonObject.addProperty("userId", userId);
         String jsonOut = jsonObject.toString();
-        CommonTask findPhoneTask = new CommonTask(url, jsonOut);
+        CommonTask findPhoneTask = new CommonTask(url,jsonOut );
 
         try {
             phoneNumber = findPhoneTask.execute().get();

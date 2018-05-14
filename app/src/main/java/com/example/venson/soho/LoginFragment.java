@@ -120,11 +120,13 @@ public class LoginFragment extends Fragment {
             user = gson.fromJson(result, User.class);
 
             userId = user.getUserId();
+            String userImagePath =user.getUserPicPath();
             Log.d(TAG,String.valueOf(userId));
 
             SharedPreferences preferences = getActivity().getSharedPreferences(
                     Common.PREF_FILE, MODE_PRIVATE);
-            preferences.edit().putInt("user_id",userId).apply();
+            preferences.edit().putInt("user_id",userId)
+                    .putString("userPicPath",userImagePath).apply();
             isUser =true;
 
         } catch (Exception e) {
@@ -140,20 +142,20 @@ public class LoginFragment extends Fragment {
         super.onStart();
 
 
-        SharedPreferences preferences = getActivity().getSharedPreferences(Common.PREF_FILE,
-                MODE_PRIVATE);
-        boolean login = preferences.getBoolean("login", false);
-        if (login) {
-            String email = preferences.getString("email", "");
-            String password = preferences.getString("password", "");
-
-            if (isUser(email, password)) {
-                getActivity().setResult(Activity.RESULT_OK);
-                Fragment fragment = new MemberFragment();
-                getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-            }
-
-        }
+//        SharedPreferences preferences = getActivity().getSharedPreferences(Common.PREF_FILE,
+//                MODE_PRIVATE);
+//        boolean login = preferences.getBoolean("login", false);
+//        if (login) {
+//            String email = preferences.getString("email", "");
+//            String password = preferences.getString("password", "");
+//
+//            if (isUser(email, password)) {
+//                getActivity().setResult(Activity.RESULT_OK);
+//                Fragment fragment = new MemberFragment();
+//                getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+//            }
+//
+//        }
 
 
     }
