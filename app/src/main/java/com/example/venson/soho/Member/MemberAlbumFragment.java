@@ -26,7 +26,6 @@ public class MemberAlbumFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.member_album, container, false);
-        MainActivity activity = (MainActivity) getActivity();
 
         return view;
     }

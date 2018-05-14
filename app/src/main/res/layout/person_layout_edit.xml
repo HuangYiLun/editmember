@@ -23,7 +23,7 @@
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivMemberUser"
+                android:id="@+id/ivEditUser"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center"
@@ -75,7 +75,7 @@
                     >
 
                     <Button
-                        android:id="@+id/btMemberTrack"
+                        android:id="@+id/btEditTrack"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/heart"
@@ -91,8 +91,7 @@
                     >
 
                     <Button
-
-                        android:id="@+id/btMemberGallery"
+                        android:id="@+id/btEditGallery"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/gallery"
@@ -108,7 +107,7 @@
                     >
 
                     <Button
-                        android:id="@+id/btMemberEvaluation"
+                        android:id="@+id/btEditEvaluation"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/evaluation"
@@ -159,7 +158,7 @@
                         >
 
                         <ImageButton
-                            android:id="@+id/btMemberEdit"
+                            android:id="@+id/btEditComplete"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_check_black_24dp"
@@ -267,6 +266,7 @@
                         android:layout_marginStart="5dp"
                         />
                     <TextView
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="專長能力"
