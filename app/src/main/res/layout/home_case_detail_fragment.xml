@@ -62,13 +62,13 @@
                 android:layout_marginTop="10dp"
                 android:text="地點:"
                 />
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textSize="18sp"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:text="類型:"-->
-                <!--/>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:text="類型:"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,14 +101,14 @@
                 android:layout_marginTop="10dp"
                 android:hint="地點"
                 />
-            <!--<TextView-->
-                <!--android:id="@+id/case_detail_tvCagetory"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textSize="18sp"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:hint="類型"-->
-                <!--/>-->
+            <TextView
+                android:id="@+id/case_detail_tvCagetory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:hint="類型"
+                />
             <TextView
                 android:id="@+id/case_detail_tvConten"
                 android:layout_width="wrap_content"
@@ -355,19 +355,24 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        >
-        <Button
-            android:id="@+id/case_detail_btApply"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="申請"
-            />
+            android:layout_marginTop="5dp"
+            android:gravity="center">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/case_detail_btApply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/white_rounded2"
+                android:text="申請"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
     </ScrollView>
