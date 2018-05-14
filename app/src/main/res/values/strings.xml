@@ -41,6 +41,9 @@
     <string name="case_detail">案件說明</string>
     <string name="msg_NoMember">無任何會員</string>
     <string name="確認密碼">確認密碼</string>
+    <string name="cancelapplication">取消申請</string>
+    <string name="cancel">取消</string>
+    <string name="evaluation">評價</string>
     <string name="add_album_title">作品集</string>
 
     <string-array name="city">

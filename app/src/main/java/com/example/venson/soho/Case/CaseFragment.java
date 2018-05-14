@@ -24,7 +24,4 @@ public class CaseFragment extends Fragment {
 
         return view;
     }
-
-
-
-}
+}//end
