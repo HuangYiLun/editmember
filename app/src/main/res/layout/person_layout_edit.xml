@@ -33,7 +33,7 @@
                 app:civ_border_color="#ffffff"
                 />
 
-            <TextView
+            <EditText
                 android:id="@+id/etEditName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,7 +169,7 @@
                 </LinearLayout>
 
 
-                <TextView
+                <EditText
                     android:id="@+id/etEditCompany"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                     android:textSize="20sp"
                     android:layout_marginTop="10dp"
                     />
-                <TextView
+                <EditText
                     android:id="@+id/etEditWorkExperience"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -257,7 +257,7 @@
                         android:textSize="12sp"
                         android:layout_marginStart="5dp"
                         />
-                    <TextView
+                    <EditText
                         android:id="@+id/etEditExpertise"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -265,7 +265,7 @@
                         android:textSize="18sp"
                         android:layout_marginStart="5dp"
                         />
-                    <TextView
+                    <EditText
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -313,7 +313,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
-                    <TextView
+                    <EditText
                         android:id="@+id/etEditPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -321,7 +321,7 @@
                         android:textSize="20sp"
                         android:layout_marginStart="5dp"
                         />
-                    <TextView
+                    <EditText
                         android:id="@+id/etEditLine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -340,7 +340,7 @@
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 />
-            <TextView
+            <EditText
                 android:id="@+id/etEditLive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

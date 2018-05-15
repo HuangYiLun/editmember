@@ -42,9 +42,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class MemberFragment extends Fragment {
     private String TAG = "MemberFragment";
     private Button btGallery, btTrack, btEvaluation;
-    private ImageButton  btEdit;
+    private ImageButton btEdit;
     private TextView etName, etCompany, etWorkExperience, etExpertise, etLive, etPhone, etLine;
-    private CommonTask findCompanyTask,findUserCapacityTask;
+    private CommonTask findCompanyTask, findUserCapacityTask;
     private ImageView ivMemberView;
 
     @Override
@@ -58,7 +58,6 @@ public class MemberFragment extends Fragment {
         String ID = String.valueOf(sharedPreferences.getInt("user_id", -1));
         MainActivity activity = (MainActivity) getActivity();
         Common.connectServer(ID, activity);
-
 
 
         btGallery.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +112,7 @@ public class MemberFragment extends Fragment {
         SharedPreferences pref = getActivity().getSharedPreferences(Common.PREF_FILE, MODE_PRIVATE);
         int userId = pref.getInt("user_id", -1);
         Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
+
         if (Common.networkConnected(getActivity())) {
             String url = Common.URL + "/Login_RegistServlet";
             JsonObject jsonObject = new JsonObject();
@@ -127,22 +127,48 @@ public class MemberFragment extends Fragment {
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
-            UserCompany userCompany = getUserCompanyName(userId);
-            String companyName = userCompany.getName();
-            Log.d(TAG,companyName);
 
-            String capacity = findUserCapacitiesById(userId);
+            //取得公司名稱
+            UserCompany userCompany = getUserCompanyName(userId);
+            String companyName = "";
+
+            if (userCompany.getName() != null) {
+                companyName = userCompany.getName();
+            } else {
+                companyName = "尚未登記公司";
+            }
+            Log.d(TAG, companyName);
+
+            //取得工作類別
+            String capacity = "";
+            if (findUserCapacitiesById(userId) != null) {
+                capacity = findUserCapacitiesById(userId);
+            } else {
+                capacity = "尚未選擇工作類別";
+            }
             Log.d(TAG, capacity);
 
-            String  exp = getUserExp(userId);
+            //取得工作經歷
+            String exp = "";
+            if (getUserExp(userId) != null) {
+                exp = getUserExp(userId);
+            } else {
+                exp = "尚未新增工作經歷";
+            }
 
-            String phoneNumber = findUserPhoneNumber(userId);
+            //取得手機號碼
+            String phoneNumber = "";
+            if (findUserPhoneNumber(userId) != null) {
+                phoneNumber = findUserPhoneNumber(userId);
+            } else {
+                phoneNumber = "尚未新增工作經歷";
+            }
 
             //   5/14  抓圖片
-            String picPath = pref.getString("userPicPath","");
+            String picPath = pref.getString("userPicPath", "");
             Bitmap bitmap = null;
 
-            MemberGetImageTask memberGetImageTask = new MemberGetImageTask(url,picPath);
+            MemberGetImageTask memberGetImageTask = new MemberGetImageTask(url, picPath);
             try {
                 bitmap = memberGetImageTask.execute().get();
             } catch (Exception e) {
@@ -157,7 +183,7 @@ public class MemberFragment extends Fragment {
             etName.setText(user.getUserName());
             etLine.setText(user.getUserLINE());
             etExpertise.setText(capacity);
-            etCompany.setText(userCompany.getName());
+            etCompany.setText(companyName);
             etLive.setText(user.getUserlive());
             etWorkExperience.setText(exp);
             etPhone.setText(phoneNumber);
@@ -170,7 +196,7 @@ public class MemberFragment extends Fragment {
 
     }
 
-    //
+
     private void findviews(View view) {
         btTrack = view.findViewById(R.id.btMemberTrack);
         btEvaluation = view.findViewById(R.id.btMemberEvaluation);
@@ -187,7 +213,7 @@ public class MemberFragment extends Fragment {
 
     }
 
-    private UserCompany getUserCompanyName(int userId){
+    private UserCompany getUserCompanyName(int userId) {
 
         Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
         String url = Common.URL + "/Login_RegistServlet";
@@ -200,17 +226,17 @@ public class MemberFragment extends Fragment {
         try {
             String result = findCompanyTask.execute().get();
             userCompany = gson.fromJson(result, UserCompany.class);
-            Log.d(TAG,result);
+            Log.d(TAG, result);
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
 
-        return  userCompany;
+        return userCompany;
 
     }
 
-    private String findUserCapacitiesById(int userId){
-        String userCapacityName="";
+    private String findUserCapacitiesById(int userId) {
+        String userCapacityName = "";
         Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
         String url = Common.URL + "/Login_RegistServlet";
         JsonObject jsonObject = new JsonObject();
@@ -220,28 +246,29 @@ public class MemberFragment extends Fragment {
         findCompanyTask = new CommonTask(url, jsonOut);
         List<UserCapacity> capacities = new ArrayList<>();
 
-        Type listType = new TypeToken<ArrayList<UserCapacity>>(){}.getType();
+        Type listType = new TypeToken<ArrayList<UserCapacity>>() {
+        }.getType();
         try {
             String result = findCompanyTask.execute().get();
 
             capacities = gson.fromJson(result, listType);
-            Log.d(TAG,"capacities"+String.valueOf(capacities));
+            Log.d(TAG, "capacities" + String.valueOf(capacities));
 
-            Log.d(TAG,"result"+result);
+            Log.d(TAG, "result" + result);
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
 
-        for (UserCapacity userCapacity:capacities) {
+        for (UserCapacity userCapacity : capacities) {
 
             userCapacityName = userCapacity.getC().getName();
         }
-        Log.d(TAG,"name"+userCapacityName);
-        return userCapacityName ;
+        Log.d(TAG, "name" + userCapacityName);
+        return userCapacityName;
 
     }
 
-    private String getUserExp(int userId){
+    private String getUserExp(int userId) {
 
         Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
         String url = Common.URL + "/Login_RegistServlet";
@@ -251,26 +278,28 @@ public class MemberFragment extends Fragment {
         String jsonOut = jsonObject.toString();
         findCompanyTask = new CommonTask(url, jsonOut);
         List<UserExp> userExps = new ArrayList<>();
-        Type listType = new TypeToken<ArrayList<UserExp>>(){}.getType();
+        Type listType = new TypeToken<ArrayList<UserExp>>() {
+        }.getType();
 
         try {
             String result = findCompanyTask.execute().get();
             userExps = gson.fromJson(result, listType);
-            Log.d(TAG,result);
+            Log.d(TAG, result);
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
-        String exp="";
+        String exp = "";
 
-        for (UserExp userExp:userExps) {
-            exp = exp +userExp.getExpDes();
+        for (UserExp userExp : userExps) {
+            exp = exp + userExp.getExpDes();
 
         }
         Log.d(TAG, "exp " + exp);
 
-        return  exp;
+        return exp;
 
     }
+
     private String findUserPhoneNumber(int userId) {
         String phoneNumber = "";
         Gson gson = new GsonBuilder().setDateFormat("yyy_MM_dd").create();
@@ -279,7 +308,7 @@ public class MemberFragment extends Fragment {
         jsonObject.addProperty("action", "findUserPhone");
         jsonObject.addProperty("userId", userId);
         String jsonOut = jsonObject.toString();
-        CommonTask findPhoneTask = new CommonTask(url,jsonOut );
+        CommonTask findPhoneTask = new CommonTask(url, jsonOut);
 
         try {
             phoneNumber = findPhoneTask.execute().get();
@@ -289,7 +318,7 @@ public class MemberFragment extends Fragment {
             Log.e(TAG, e.toString());
         }
 
-        return phoneNumber ;
+        return phoneNumber;
 
     }
 

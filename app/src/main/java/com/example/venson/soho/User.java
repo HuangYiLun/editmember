@@ -17,7 +17,7 @@ public class User {
 	//false=F,true=M
 	
 	private String userPicPath;
-	private String userlive;
+//	private String userlive;
 
 	public User(int userId, String email, String password, Date registerTime, boolean isFBRegistered, String userName,
 			String userLINE, String userSelfDes, boolean userGender, String userPicPath) {
@@ -48,7 +48,7 @@ public class User {
 		this.userSelfDes = userSelfDes;
 		this.userGender = userGender;
 		this.userPicPath = userPicPath;
-		this.userlive = userlive;
+//		this.userlive = userlive;
 	}
 
 	public User(int userId, String email, Date registerTime, boolean isFBRegistered, String userName, String userLINE, String userSelfDes, boolean userGender, String userPicPath) {
@@ -143,11 +143,11 @@ public class User {
 		this.userPicPath = userPicPath;
 	}
 
-	public String getUserlive() {
-		return userlive;
-	}
-
-	public void setUserlive(String userlive) {
-		this.userlive = userlive;
-	}
+//	public String getUserlive() {
+//		return userlive;
+//	}
+//
+//	public void setUserlive(String userlive) {
+//		this.userlive = userlive;
+//	}
 }

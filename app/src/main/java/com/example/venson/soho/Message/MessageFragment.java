@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,10 +17,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.venson.soho.Common;
 import com.example.venson.soho.LoginRegist.CommonTask;
+import com.example.venson.soho.LoginRegist.MemberGetImageTask;
 import com.example.venson.soho.MainActivity;
 import com.example.venson.soho.Member.User;
 import com.example.venson.soho.R;
@@ -82,10 +86,12 @@ public class MessageFragment extends Fragment {
 
         class FriendViewHolder extends RecyclerView.ViewHolder {
             TextView tvUserName;
+            ImageView ivUserProfile;
 
             FriendViewHolder(View itemView) {
                 super(itemView);
                 tvUserName = itemView.findViewById(R.id.tvChatUserListName);
+                ivUserProfile = itemView.findViewById(R.id.chatUserListProfile);
 
             }
         }
@@ -121,6 +127,21 @@ public class MessageFragment extends Fragment {
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
             }
+            String picPath =user.getUserPicPath();
+            Bitmap bitmap = null;
+
+            MemberGetImageTask memberGetImageTask = new MemberGetImageTask(url,picPath);
+            try {
+                bitmap = memberGetImageTask.execute().get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (bitmap != null) {
+                holder.ivUserProfile.setImageBitmap(bitmap);
+            } else {
+                holder.ivUserProfile.setImageResource(R.drawable.dog);
+            }
+
 
 
             holder.tvUserName.setText(user.getUserName());

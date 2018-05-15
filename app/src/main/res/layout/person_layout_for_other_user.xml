@@ -24,6 +24,7 @@
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivOtherUser"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center"
@@ -75,6 +76,7 @@
                     >
 
                     <Button
+                        android:id="@+id/btOtherTrack"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/heart"
@@ -90,7 +92,7 @@
                     >
 
                     <Button
-                        android:id="@+id/btGallery"
+                        android:id="@+id/btOtherGallery"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/gallery"
@@ -106,6 +108,7 @@
                     >
 
                     <Button
+                        android:id="@+id/btOtherEvaluation"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/evaluation"
@@ -154,6 +157,7 @@
 
 
                 <TextView
+                    android:id="@+id/bt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="公司"
